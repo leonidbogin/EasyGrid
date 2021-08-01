@@ -36,7 +36,7 @@ namespace EasyGrid.ViewModels
                 {
                     var grid = createGridProvider.CreateGrid(leftTopLat, leftTopLon, rightBottomLat, rightBottomLon, squareSize);
                     var gpx = convertGridToGpxProvider.ConvertToGpx(grid);
-                    saveGpxProvider.Save(gpx, "filepath.gpx");
+                    saveGpxProvider.Save(gpx, "grid.gpx");
                 });
             }
         }

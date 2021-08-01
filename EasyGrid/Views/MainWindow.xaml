@@ -30,7 +30,7 @@
                             <RowDefinition Height="28"/>
                             <RowDefinition Height="12"/>
                         </Grid.RowDefinitions>
-                        <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="5"/>
+                        <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="5" HorizontalAlignment="Stretch"/>
                         <Label HorizontalAlignment="Center"  Grid.ColumnSpan="5" VerticalAlignment="Center" Content="Grid borders" Foreground="White" Margin="0" FontSize="14" Background="{x:Null}" FontFamily="Calibri" Height="26" />
                         <Label Content="Copying borders from SAS Planet" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Center" FontFamily="Calibri" FontSize="15" Grid.ColumnSpan="4" FontStyle="Italic" Grid.Column="1"/>
                         <Button Command="{Binding CopyCoordinatesCommand}" Grid.Row="2" Margin="0,3,5,3" MinWidth="100" Grid.Column="2" Grid.ColumnSpan="2" Content="Copy and paste" HorizontalAlignment="Right" />

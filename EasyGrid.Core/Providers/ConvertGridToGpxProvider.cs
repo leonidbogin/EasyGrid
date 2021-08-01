@@ -8,11 +8,7 @@ namespace EasyGrid.Core.Providers
 {
     public class ConvertGridToGpxProvider
     {
-
-        public ConvertGridToGpxProvider()
-        {
-
-        }
+        public ConvertGridToGpxProvider() { }
 
         public Gpx ConvertToGpx(GeoPoint[,] grid)
         {
@@ -30,42 +26,31 @@ namespace EasyGrid.Core.Providers
                 }
             };
 
-            var track = new TrackCollection()
+            var track = new Track()
             {
                 Name = "grid",
                 Points = GenerateTrack(grid)
             };
 
+            var points = gridArray.Select(s => new Point() { Name = s.Name, Lat = s.Lat, Lon = s.Lon }).ToArray();
+
             var gpx = new Gpx()
             {
                 MetaData = metadata,
-                TrackCollection = track
+                TrackCollection = track,
+                Points = points
             };
 
             return gpx;
         }
 
-        private static TrackCollectionSegment[] GenerateTrack(GeoPoint[,] grid)
+        private static TrackPoint[] GenerateTrack(GeoPoint[,] grid)
         {
-            var width = grid.GetLength(0);
-            var height = grid.GetLength(1);
-
-            var lineGridProvider = new LineGridProvider(width, height);
+            var lineGridProvider = new LineGridProvider(grid.GetLength(0), grid.GetLength(1));
             var linePath = lineGridProvider.GenerateLinePath();
-            var points = new TrackCollectionSegment[linePath.Length];
-
-            for (var i = 0; i < linePath.Length; i++)
-            {
-                points[i] = new TrackCollectionSegment()
-                {
-                    Lat = grid[linePath[i].lat, linePath[i].lon].Lat,
-                    Lon = grid[linePath[i].lat, linePath[i].lon].Lon
-                };
-            }
+            var points = linePath.Select(s => new TrackPoint() {Lat = s.lat, Lon = s.lon}).ToArray();
 
             return points;
         }
-
-        
     }
 }

@@ -12,6 +12,9 @@ namespace EasyGrid.Core.Models.Gpx
         public Metadata MetaData { get; set; }
 
         [XmlElement("trk")]
-        public TrackCollection TrackCollection { get; set; }
+        public Track TrackCollection { get; set; }
+
+        [XmlElement("wpt")]
+        public Point[] Points { get; set; }
     }
 }
