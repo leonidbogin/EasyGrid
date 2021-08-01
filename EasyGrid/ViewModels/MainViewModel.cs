@@ -1,5 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using EasyGrid.Commands;
+using EasyGrid.Core.Models.Gpx;
+using EasyGrid.Core.Providers;
 using System.Collections.Generic;
 using System.Windows.Input;
 using System.Xml;
