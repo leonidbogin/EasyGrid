@@ -1,6 +1,7 @@
 ﻿using EasyGrid.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 
 namespace EasyGrid.Core.Providers
 {
@@ -40,10 +41,18 @@ namespace EasyGrid.Core.Providers
                 }
             }
 
+            for (var j = 0; j < leftBorder.Count; j++)
+            {
+                for (var i = 0; i < topBorder.Count; i++)
+                {
+                    grid[i, j].Name = GeneratePointName(i, j);
+                }
+            }
+
             return grid;
         }
 
-        private List<GeoPoint> CreateVerticalBorder(GeoPoint startPoint, double bottomLat, int squareSize)
+        private static List<GeoPoint> CreateVerticalBorder(GeoPoint startPoint, double bottomLat, int squareSize)
         {
             GeoPoint move;
             var point = (GeoPoint)startPoint.Clone();
@@ -59,7 +68,7 @@ namespace EasyGrid.Core.Providers
             return pointsList;
         }
 
-        private List<GeoPoint> CreateHorizontalBorder(GeoPoint startPoint, double rightLon, int squareSize)
+        private static List<GeoPoint> CreateHorizontalBorder(GeoPoint startPoint, double rightLon, int squareSize)
         {
             GeoPoint move;
             var point = (GeoPoint)startPoint.Clone();
@@ -75,7 +84,7 @@ namespace EasyGrid.Core.Providers
             return pointsList;
         }
 
-        private GeoPoint CalcMove(GeoPoint point, int distance, double angle)
+        private static GeoPoint CalcMove(GeoPoint point, int distance, double angle)
         {
             var stepLat = 360.0 * Math.Sin(angle) * distance / CoreConstants.Planet.Lat;
             var stepLon = 360.0 * Math.Cos(angle) * distance / (CoreConstants.Planet.Lon * Math.Cos(point.Lat * CoreConstants.Rad));
@@ -85,6 +94,25 @@ namespace EasyGrid.Core.Providers
                 Lat = stepLat,
                 Lon = stepLon,
             };
+        }
+
+        private static string GeneratePointName(int i, int j)
+        {
+            return $"{GenerateLetterFromIndex(i + 1)}{j + 1}";
+        }
+
+        private static string GenerateLetterFromIndex(int index)
+        {
+            var colLetter = string.Empty;
+
+            while (index > 0)
+            {
+                var mod = (index - 1) % 26;
+                colLetter = (char)(65 + mod) + colLetter;
+                index = (index - mod) / 26;
+            }
+
+            return colLetter;
         }
     }
 }
