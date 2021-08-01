@@ -48,9 +48,9 @@ namespace EasyGrid.Core.Providers
         {
             var lineGridProvider = new LineGridProvider(grid.GetLength(0), grid.GetLength(1));
             var linePath = lineGridProvider.GenerateLinePath();
-            var points = linePath.Select(s => new TrackPoint() {Lat = s.lat, Lon = s.lon}).ToArray();
+            var trackPoints = linePath.Select(s => new TrackPoint() { Lat = grid[s.i, s.j].Lat, Lon = grid[s.i, s.j].Lon }).ToArray();
 
-            return points;
+            return trackPoints;
         }
     }
 }

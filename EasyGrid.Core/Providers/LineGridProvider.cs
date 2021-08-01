@@ -17,7 +17,7 @@ namespace EasyGrid.Core.Providers
             this.height = height;
         }
 
-        public (int lat, int lon)[] GenerateLinePath()
+        public (int i, int j)[] GenerateLinePath()
         {
             var points = new List<(int, int)>();
 
