@@ -8,6 +8,9 @@ namespace EasyGrid.Core.Models.Gpx
     [XmlRoot("gpx", Namespace = "http://www.topografix.com/GPX/1/0")]
     public class Gpx
     {
+        [XmlAttribute("creator")]
+        public string Creator { get; set; }
+
         [XmlElement("metadata")]
         public Metadata MetaData { get; set; }
 

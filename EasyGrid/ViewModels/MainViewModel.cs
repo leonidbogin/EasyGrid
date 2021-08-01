@@ -4,7 +4,9 @@ using EasyGrid.Core.Models;
 using EasyGrid.Core.Providers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Input;
+using Microsoft.Win32;
 
 namespace EasyGrid.ViewModels
 {
@@ -14,6 +16,7 @@ namespace EasyGrid.ViewModels
         private readonly CreateGridProvider createGridProvider;
         private readonly ConvertGridToGpxProvider convertGridToGpxProvider;
         private readonly SaveGpxProvider saveGpxProvider;
+        private readonly SaveFileDialog saveFileDialog;
 
         public MainViewModel()
         {
@@ -24,8 +27,16 @@ namespace EasyGrid.ViewModels
             SetSelection(lastSelectionProvider.GetLastSelection());
 
             createGridProvider = new CreateGridProvider();
-            convertGridToGpxProvider = new ConvertGridToGpxProvider();
+
+            var creatorName = $"{Assembly.GetExecutingAssembly().GetName().Name} v{Assembly.GetExecutingAssembly().GetName().Version?.Major}.{Assembly.GetExecutingAssembly().GetName().Version?.Minor}";
+            convertGridToGpxProvider = new ConvertGridToGpxProvider(creatorName);
+            
             saveGpxProvider = new SaveGpxProvider();
+
+            saveFileDialog = new SaveFileDialog
+            {
+                Filter = "GPX file (*.gpx)|*.gpx"
+            };
         }
 
         public ICommand CreateGridCommand
@@ -34,9 +45,11 @@ namespace EasyGrid.ViewModels
             {
                 return new CreateGridCommand((obj) =>
                 {
+                    if (saveFileDialog.ShowDialog() != true) return;
+
                     var grid = createGridProvider.CreateGrid(leftTopLat, leftTopLon, rightBottomLat, rightBottomLon, squareSize);
                     var gpx = convertGridToGpxProvider.ConvertToGpx(grid);
-                    saveGpxProvider.Save(gpx, "grid.gpx");
+                    saveGpxProvider.Save(gpx, saveFileDialog.FileName);
                 });
             }
         }

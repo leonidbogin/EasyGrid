@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using EasyGrid.Core.Models;
-using EasyGrid.Core.Models.GPX;
 
 namespace EasyGrid.Core.Providers
 {

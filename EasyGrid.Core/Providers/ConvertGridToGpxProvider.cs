@@ -8,7 +8,12 @@ namespace EasyGrid.Core.Providers
 {
     public class ConvertGridToGpxProvider
     {
-        public ConvertGridToGpxProvider() { }
+        private readonly string creatorName;
+
+        public ConvertGridToGpxProvider(string creatorName)
+        {
+            this.creatorName = creatorName;
+        }
 
         public Gpx ConvertToGpx(GeoPoint[,] grid)
         {
@@ -36,6 +41,7 @@ namespace EasyGrid.Core.Providers
 
             var gpx = new Gpx()
             {
+                Creator = creatorName,
                 MetaData = metadata,
                 TrackCollection = track,
                 Points = points

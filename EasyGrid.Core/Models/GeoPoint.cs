@@ -8,14 +8,11 @@ namespace EasyGrid.Core.Models
         public double Lat { get; set; }
         public double Lon { get; set; }
 
-        public GeoPoint()
-        {
-
-        }
+        public GeoPoint() { }
 
         public static GeoPoint operator +(GeoPoint point1, GeoPoint point2)
         {
-            return new GeoPoint()
+            return new()
             {
                 Name = point1.Name,
                 Lat = point1.Lat + point2.Lat,
