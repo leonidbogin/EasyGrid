@@ -2,16 +2,19 @@
 using EasyGrid.Commands;
 using EasyGrid.Core.Models;
 using EasyGrid.Core.Providers;
+using EasyGrid.Providers;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Reflection;
 using System.Windows.Input;
-using Microsoft.Win32;
 
 namespace EasyGrid.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly SettingsProvider settingsProvider;
         private readonly SASLastSelectionProvider lastSelectionProvider;
         private readonly CreateGridProvider createGridProvider;
         private readonly ConvertGridToGpxProvider convertGridToGpxProvider;
@@ -20,8 +23,10 @@ namespace EasyGrid.ViewModels
 
         public MainViewModel()
         {
+            settingsProvider = new SettingsProvider();
+
             squareSizes = new[] { 500, 250, 200, 100 };
-            squareSize = squareSizes.First();
+            squareSize = settingsProvider.LastSquareSize;
 
             lastSelectionProvider = new SASLastSelectionProvider();
             SetSelection(lastSelectionProvider.GetLastSelection());
@@ -35,8 +40,10 @@ namespace EasyGrid.ViewModels
 
             saveFileDialog = new SaveFileDialog
             {
-                Filter = "GPX file (*.gpx)|*.gpx"
+                Filter = "GPX file (*.gpx)|*.gpx",
+                RestoreDirectory = true
             };
+
         }
 
         public ICommand CreateGridCommand
@@ -45,11 +52,16 @@ namespace EasyGrid.ViewModels
             {
                 return new CreateGridCommand((obj) =>
                 {
-                    if (saveFileDialog.ShowDialog() != true) return;
+                    saveFileDialog.InitialDirectory = GetLastSaveDirectory();
+                    saveFileDialog.FileName = $"Grid_{squareSize}_{DateTime.Now:yyyy-MM-dd}";
 
-                    var grid = createGridProvider.CreateGrid(leftTopLat, leftTopLon, rightBottomLat, rightBottomLon, squareSize);
-                    var gpx = convertGridToGpxProvider.ConvertToGpx(grid);
-                    saveGpxProvider.Save(gpx, saveFileDialog.FileName);
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        var grid = createGridProvider.CreateGrid(leftTopLat, leftTopLon, rightBottomLat, rightBottomLon, squareSize);
+                        var gpx = convertGridToGpxProvider.ConvertToGpx(grid);
+                        saveGpxProvider.Save(gpx, saveFileDialog.FileName);
+                        UpdateSettings();
+                    }
                 });
             }
         }
@@ -71,6 +83,23 @@ namespace EasyGrid.ViewModels
             LeftTopLon = points[0].Lon;
             RightBottomLat = points[1].Lat;
             RightBottomLon = points[1].Lon;
+        }
+
+        private void UpdateSettings()
+        {
+            settingsProvider.LastFilePath = saveFileDialog.FileName;
+            settingsProvider.LastSquareSize = SquareSize;
+            settingsProvider.Save();
+        }
+
+        private string GetLastSaveDirectory()
+        {
+            var lastDirectoryPath = Path.GetFullPath(Path.GetDirectoryName(settingsProvider.LastFilePath) ?? string.Empty);
+            if (Directory.Exists(lastDirectoryPath))
+            {
+                return lastDirectoryPath;
+            }
+            return Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
         }
 
         private double leftTopLat;

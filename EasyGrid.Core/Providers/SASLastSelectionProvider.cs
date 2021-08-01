@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.IO;
 using EasyGrid.Core.Models;
 
 namespace EasyGrid.Core.Providers
@@ -6,6 +7,7 @@ namespace EasyGrid.Core.Providers
     public class SASLastSelectionProvider
     {
         private readonly IniFileParser.IniFileParser parser;
+        private const string FileName = "LastSelection.hlg";
 
         public SASLastSelectionProvider()
         {
@@ -14,7 +16,12 @@ namespace EasyGrid.Core.Providers
 
         public GeoPoint[] GetLastSelection()
         {
-            var data = parser.ReadFile("LastSelection.hlg");
+            if (!File.Exists(FileName))
+            {
+                throw new FileNotFoundException($"{FileName} file not found");
+            }
+
+            var data = parser.ReadFile(FileName);
             var points = new GeoPoint[2];
 
             points[0] = new GeoPoint()

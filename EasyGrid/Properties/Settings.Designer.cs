@@ -22,5 +22,29 @@ namespace EasyGrid.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastFilePath {
+            get {
+                return ((string)(this["LastFilePath"]));
+            }
+            set {
+                this["LastFilePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int LastSquareSize {
+            get {
+                return ((int)(this["LastSquareSize"]));
+            }
+            set {
+                this["LastSquareSize"] = value;
+            }
+        }
     }
 }

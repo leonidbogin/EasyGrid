@@ -59,7 +59,7 @@
                         <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="4"/>
                         <Label HorizontalAlignment="Center" Grid.ColumnSpan="4" VerticalAlignment="Center" Content="Grid settings" Foreground="White" Margin="0" FontSize="14" Background="{x:Null}" FontFamily="Calibri" Height="26" />
                         <Label Content="Square size in meters" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" FontFamily="Calibri" FontSize="14" Height="26" FontStyle="Italic" Grid.Column="1" Width="129"/>
-                        <ComboBox SelectedValue="{Binding SquareSize}" ItemsSource="{Binding SquareSizes}" Grid.Row="2" Grid.Column="2" Margin="0,4" Width="100" HorizontalAlignment="Left" IsEditable="True" />
+                        <ComboBox Text="{Binding SquareSize}" ItemsSource="{Binding SquareSizes}" Grid.Row="2" Grid.Column="2" Margin="0,4" Width="100" HorizontalAlignment="Left" IsEditable="True" StaysOpenOnEdit="True" />
                     </Grid>
                 </Border>
                 <Button Command="{Binding CreateGridCommand}" Content="Create grid file 📁" Margin="7,12,7,10" Height="30" FontFamily="Calibri" FontSize="16" Foreground="#FF4D4D4D" Background="#FFDDDDDD" BorderBrush="#FF4D4D4D" />
