@@ -2,16 +2,14 @@
 using EasyGrid.Core.Models.Gpx;
 using EasyGrid.Core.Models.GPX;
 using System;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
 
 namespace EasyGrid.Core.Providers
 {
-    public class ConvertToGpxProvider
+    public class ConvertGridToGpxProvider
     {
 
-        public ConvertToGpxProvider()
+        public ConvertGridToGpxProvider()
         {
 
         }

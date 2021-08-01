@@ -6,27 +6,14 @@ namespace EasyGrid.Core.Providers
 {
     public class CreateGridProvider
     {
-        private readonly double topLat;
-        private readonly double leftLon;
-        private readonly double bottomLat;
-        private readonly double rightLon;
-        private readonly int squareSize;
+        public CreateGridProvider() { }
 
-        public CreateGridProvider(
+        public GeoPoint[,] CreateGrid(
             double topLat,
             double leftLon,
             double bottomLat,
             double rightLon,
             int squareSize)
-        {
-            this.topLat = topLat;
-            this.leftLon = leftLon;
-            this.bottomLat = bottomLat;
-            this.rightLon = rightLon;
-            this.squareSize = squareSize;
-        }
-
-        public GeoPoint[,] CreateGrid()
         {
             var startPoint = new GeoPoint()
             {
@@ -34,8 +21,8 @@ namespace EasyGrid.Core.Providers
                 Lon = leftLon
             };
 
-            var leftBorder = CreateVerticalBorder(startPoint);
-            var topBorder = CreateHorizontalBorder(startPoint);
+            var leftBorder = CreateVerticalBorder(startPoint, bottomLat, squareSize);
+            var topBorder = CreateHorizontalBorder(startPoint, rightLon, squareSize);
             var grid = new GeoPoint[topBorder.Count, leftBorder.Count];
 
             for(var i = 0; i < topBorder.Count; i++)
@@ -49,14 +36,14 @@ namespace EasyGrid.Core.Providers
 
                 for (var i = 1; i < topBorder.Count; i++)
                 {
-                    grid[i, j] = grid[i - 1, j] + CalcMove(grid[i - 1, j], CoreConstants.Angle.Right);
+                    grid[i, j] = grid[i - 1, j] + CalcMove(grid[i - 1, j], squareSize, CoreConstants.Angle.Right);
                 }
             }
 
             return grid;
         }
 
-        private List<GeoPoint> CreateVerticalBorder(GeoPoint startPoint)
+        private List<GeoPoint> CreateVerticalBorder(GeoPoint startPoint, double bottomLat, int squareSize)
         {
             GeoPoint move;
             var point = (GeoPoint)startPoint.Clone();
@@ -65,14 +52,14 @@ namespace EasyGrid.Core.Providers
             do
             {
                 pointsList.Add(point);
-                move = CalcMove(point, CoreConstants.Angle.Down);
+                move = CalcMove(point, squareSize, CoreConstants.Angle.Down);
                 point += move;
             } while (point.Lat - (move.Lat / 2) > bottomLat);
 
             return pointsList;
         }
 
-        private List<GeoPoint> CreateHorizontalBorder(GeoPoint startPoint)
+        private List<GeoPoint> CreateHorizontalBorder(GeoPoint startPoint, double rightLon, int squareSize)
         {
             GeoPoint move;
             var point = (GeoPoint)startPoint.Clone();
@@ -81,17 +68,17 @@ namespace EasyGrid.Core.Providers
             do
             {
                 pointsList.Add(point);
-                move = CalcMove(point, CoreConstants.Angle.Right);
+                move = CalcMove(point, squareSize, CoreConstants.Angle.Right);
                 point += move;
             } while (point.Lon - (move.Lon / 2) < rightLon);
 
             return pointsList;
         }
 
-        private GeoPoint CalcMove(GeoPoint point, double angle)
+        private GeoPoint CalcMove(GeoPoint point, int distance, double angle)
         {
-            var stepLat = 360.0 * Math.Sin(angle) * squareSize / CoreConstants.Planet.Lat;
-            var stepLon = 360.0 * Math.Cos(angle) * squareSize / (CoreConstants.Planet.Lon * Math.Cos(point.Lat * CoreConstants.Rad));
+            var stepLat = 360.0 * Math.Sin(angle) * distance / CoreConstants.Planet.Lat;
+            var stepLon = 360.0 * Math.Cos(angle) * distance / (CoreConstants.Planet.Lon * Math.Cos(point.Lat * CoreConstants.Rad));
 
             return new GeoPoint()
             {

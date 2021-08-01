@@ -1,27 +1,31 @@
 ﻿using DevExpress.Mvvm;
 using EasyGrid.Commands;
-using EasyGrid.Core.Models.Gpx;
+using EasyGrid.Core.Models;
 using EasyGrid.Core.Providers;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
-using System.Xml;
-using System.Xml.Serialization;
-using EasyGrid.Core.Models;
 
 namespace EasyGrid.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
         private readonly SASLastSelectionProvider lastSelectionProvider;
+        private readonly CreateGridProvider createGridProvider;
+        private readonly ConvertGridToGpxProvider convertGridToGpxProvider;
+        private readonly SaveGpxProvider saveGpxProvider;
 
         public MainViewModel()
         {
-            var sizes = new int[] { 500, 250, 200, 100 };
-            squareSizes = sizes;
-            squareSize = sizes[0];
+            squareSizes = new[] { 500, 250, 200, 100 };
+            squareSize = squareSizes.First();
 
             lastSelectionProvider = new SASLastSelectionProvider();
             SetSelection(lastSelectionProvider.GetLastSelection());
+
+            createGridProvider = new CreateGridProvider();
+            convertGridToGpxProvider = new ConvertGridToGpxProvider();
+            saveGpxProvider = new SaveGpxProvider();
         }
 
         public ICommand CreateGridCommand
@@ -30,18 +34,9 @@ namespace EasyGrid.ViewModels
             {
                 return new CreateGridCommand((obj) =>
                 {
-                    var createGridProvider = new CreateGridProvider(leftTopLat, leftTopLon, rightBottomLat, rightBottomLon, squareSize);
-                    var convertToGpxProvider = new ConvertToGpxProvider();
-
-                    var grid = createGridProvider.CreateGrid();
-                    var gpx = convertToGpxProvider.ConvertToGpx(grid);
-
-                    var xmlWriterSettings = new XmlWriterSettings { Indent = true };
-                    using (var writer = XmlWriter.Create("filepath.gpx", xmlWriterSettings))
-                    {
-                        var serializer = new XmlSerializer(typeof(Gpx));
-                        serializer.Serialize(writer, gpx);
-                    }
+                    var grid = createGridProvider.CreateGrid(leftTopLat, leftTopLon, rightBottomLat, rightBottomLon, squareSize);
+                    var gpx = convertGridToGpxProvider.ConvertToGpx(grid);
+                    saveGpxProvider.Save(gpx, "filepath.gpx");
                 });
             }
         }
