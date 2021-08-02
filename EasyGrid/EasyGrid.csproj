@@ -7,6 +7,13 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Views\icon.png" />
+    <None Remove="Views\logo.png" />
+    <None Remove="Views\logo_angel_nov_S_NADPIS_Yu-bel_2.png" />
+    <None Remove="Views\logo_angel_nov_S_NADPIS_Yu-bel_2_3.png" />
+    <None Remove="Views\logo_text.png" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="DevExpressMvvm" Version="20.2.3" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.2.237901">
@@ -16,6 +23,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EasyGrid.Core\EasyGrid.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logo_angel_nov_S_NADPIS_Yu-bel_2_3.png" />
+    <Resource Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">

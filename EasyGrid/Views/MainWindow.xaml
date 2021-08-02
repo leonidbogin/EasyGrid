@@ -5,14 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:EasyGrid.ViewModels"
         mc:Ignorable="d"
-        Title="{Binding CreatorName}" ResizeMode="NoResize" SizeToContent="WidthAndHeight" UseLayoutRounding="False" WindowStartupLocation="CenterScreen">
+        Title="{Binding CreatorName}" ResizeMode="NoResize" SizeToContent="WidthAndHeight" UseLayoutRounding="False" WindowStartupLocation="CenterScreen" Icon="/Resources/icon.png">
     <Window.DataContext>
         <viewModels:MainViewModel/>
     </Window.DataContext>
-    <Grid Background="#FFFBFBFB" Margin="10,0,10,0">
+    <Grid Background="#FFFBFBFB">
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
             <StackPanel>
-                <Border BorderBrush="#FF4D4D4D" Margin="7,4,7,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
+                <Border BorderBrush="#FF4D4D4D" BorderThickness="1,1,1,1" Background="#FF4D4D4D" Padding="0,10,10,10" Height="82">
+                    <Grid>
+                        <Label Content="Supported by PSO Angel" Foreground="White" FontSize="26" FontFamily="Agency FB" FontWeight="Normal" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Padding="5,5,5,4" Margin="75,0,0,0" />
+                        <Image Source="/Resources/logo_angel_nov_S_NADPIS_Yu-bel_2_3.png" HorizontalAlignment="Center" Margin="0,0,210,0"/>
+                    </Grid>
+                </Border>
+                <Border BorderBrush="#FF4D4D4D" Margin="40,25,40,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="20"/>
@@ -37,7 +43,7 @@
                         <Button Command="{Binding CopyCoordinatesCommand}" Grid.Row="4" Margin="5,3,5,3" MinWidth="100" Grid.Column="3" Content="Copy and paste" HorizontalAlignment="Stretch" />
                     </Grid>
                 </Border>
-                <Border BorderBrush="#FF4D4D4D" Margin="7,10,7,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
+                <Border BorderBrush="#FF4D4D4D" Margin="40,10,40,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="20"/>
@@ -64,7 +70,7 @@
                         <TextBox x:Name="RightBottomLon" Text="{Binding RightBottomLon}" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Height="18" Margin="5,0" FontSize="14" FontFamily="Calibri" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lon" />
                     </Grid>
                 </Border>
-                <Border BorderBrush="#FF4D4D4D" Margin="7,10,7,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
+                <Border BorderBrush="#FF4D4D4D" Margin="40,10,40,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="20"/>
@@ -84,7 +90,7 @@
                         <ComboBox x:Name="SquareSize" Text="{Binding SquareSize}" ItemsSource="{Binding SquareSizes}" Grid.Row="2" Grid.Column="2" Margin="0,4" Width="100" HorizontalAlignment="Left" IsEditable="True" StaysOpenOnEdit="True" />
                     </Grid>
                 </Border>
-                <Button Command="{Binding CreateGridCommand}" Content="Create grid file 📁" Margin="7,12,7,10" Height="30" FontFamily="Calibri" FontSize="16" BorderThickness="1,1,1,1">
+                <Button Command="{Binding CreateGridCommand}" Content="Create grid file 📁" Margin="40,18,40,25" Height="30" FontFamily="Calibri" FontSize="16" BorderThickness="1,1,1,1">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="IsEnabled" Value="False"/>
