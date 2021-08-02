@@ -7,21 +7,20 @@ namespace EasyGrid.Core.Providers
     public class SASLastSelectionProvider
     {
         private readonly IniFileParser.IniFileParser parser;
-        private const string FileName = "LastSelection.hlg";
 
         public SASLastSelectionProvider()
         {
             parser = new IniFileParser.IniFileParser();
         }
 
-        public GeoPoint[] GetLastSelection()
+        public GeoPoint[] GetLastSelection(string path)
         {
-            if (!File.Exists(FileName))
+            if (!File.Exists(path))
             {
-                throw new FileNotFoundException($"{FileName} file not found");
+                throw new FileNotFoundException($"{path} file not found");
             }
 
-            var data = parser.ReadFile(FileName);
+            var data = parser.ReadFile(path);
             var points = new GeoPoint[2];
 
             points[0] = new GeoPoint()

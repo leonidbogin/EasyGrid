@@ -5,41 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:EasyGrid.ViewModels"
         mc:Ignorable="d"
-        Title="EasyGrid " Height="350" Width="390" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+        Title="{Binding CreatorName}" ResizeMode="NoResize" SizeToContent="WidthAndHeight" UseLayoutRounding="False" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <viewModels:MainViewModel/>
     </Window.DataContext>
-    <Grid Background="#FFFBFBFB">
+    <Grid Background="#FFFBFBFB" Margin="10,0,10,0">
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
             <StackPanel>
-                <Border BorderBrush="#FF4D4D4D" Margin="7,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
+                <Border BorderBrush="#FF4D4D4D" Margin="7,4,7,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="20"/>
                             <ColumnDefinition Width="85"/>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="115"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="20"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="12"/>
                             <RowDefinition Height="30"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="13"/>
+                        </Grid.RowDefinitions>
+                        <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="5" HorizontalAlignment="Stretch"/>
+                        <Label HorizontalAlignment="Center"  Grid.ColumnSpan="5" VerticalAlignment="Center" Content="SAS Planet" Foreground="White" Margin="0" FontSize="14" Background="{x:Null}" FontFamily="Calibri" Height="26" />
+                        <Label Content="Select the path to SAS Planet" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Center" FontFamily="Calibri" FontSize="15" Grid.ColumnSpan="4" FontStyle="Italic" Grid.Column="1"/>
+                        <Button Command="{Binding SelectSASPlanetCommand}" Grid.Row="2" Margin="5,3,5,3" MinWidth="100" Grid.Column="3" Content="Select SAS Planet" HorizontalAlignment="Stretch" />
+                        <Label Content="Copy selection from SAS Planet" HorizontalAlignment="Left" Margin="0" Grid.Row="4" VerticalAlignment="Center" FontFamily="Calibri" FontSize="15" Grid.ColumnSpan="4" FontStyle="Italic" Grid.Column="1"/>
+                        <Button Command="{Binding CopyCoordinatesCommand}" Grid.Row="4" Margin="5,3,5,3" MinWidth="100" Grid.Column="3" Content="Copy and paste" HorizontalAlignment="Stretch" />
+                    </Grid>
+                </Border>
+                <Border BorderBrush="#FF4D4D4D" Margin="7,10,7,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="85"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
                             <RowDefinition Height="12"/>
                             <RowDefinition Height="28"/>
                             <RowDefinition Height="28"/>
                             <RowDefinition Height="12"/>
                         </Grid.RowDefinitions>
-                        <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="5" HorizontalAlignment="Stretch"/>
-                        <Label HorizontalAlignment="Center"  Grid.ColumnSpan="5" VerticalAlignment="Center" Content="Grid borders" Foreground="White" Margin="0" FontSize="14" Background="{x:Null}" FontFamily="Calibri" Height="26" />
-                        <Label Content="Copying borders from SAS Planet" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Center" FontFamily="Calibri" FontSize="15" Grid.ColumnSpan="4" FontStyle="Italic" Grid.Column="1"/>
-                        <Button Command="{Binding CopyCoordinatesCommand}" Grid.Row="2" Margin="0,3,5,3" MinWidth="100" Grid.Column="2" Grid.ColumnSpan="2" Content="Copy and paste" HorizontalAlignment="Right" />
-                        <Label Content="Top left" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" FontFamily="Calibri" FontSize="14" Height="26" FontStyle="Italic" Grid.Column="1"/>
-                        <TextBox Text="{Binding LeftTopLat}" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Height="18" Margin="5,0" FontFamily="Calibri" FontSize="14" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lat" />
-                        <TextBox Text="{Binding LeftTopLon}" Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" Height="18" Margin="5,0" FontSize="14" FontFamily="Calibri" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lon" />
-                        <Label Content="Bottom right" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" FontFamily="Calibri" FontSize="14" Height="26" FontStyle="Italic" Grid.Column="1"/>
-                        <TextBox Text="{Binding RightBottomLat}" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Height="18" Margin="5,0" FontFamily="Calibri" FontSize="14" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lat" />
-                        <TextBox Text="{Binding RightBottomLon}" Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" Height="18" Margin="5,0" FontSize="14" FontFamily="Calibri" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lon" />
+                        <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="6" HorizontalAlignment="Stretch"/>
+                        <Label HorizontalAlignment="Center"  Grid.ColumnSpan="6" VerticalAlignment="Center" Content="First and last point" Foreground="White" Margin="0" FontSize="14" Background="{x:Null}" FontFamily="Calibri" Height="26" />
+                        <Label Content="Top left" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" FontFamily="Calibri" FontSize="14" Height="26" FontStyle="Italic" Grid.Column="1"/>
+                        <TextBox x:Name="LeftTopLat" Text="{Binding LeftTopLat}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Height="18" Margin="5,0" FontFamily="Calibri" FontSize="14" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lat"/>
+                        <TextBox x:Name="LeftTopLon" Text="{Binding LeftTopLon}" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Height="18" Margin="5,0" FontSize="14" FontFamily="Calibri" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lon" />
+                        <Label Content="Bottom right" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" FontFamily="Calibri" FontSize="14" Height="26" FontStyle="Italic" Grid.Column="1"/>
+                        <TextBox x:Name="RightBottomLat" Text="{Binding RightBottomLat}" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Height="18" Margin="5,0" FontFamily="Calibri" FontSize="14" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lat" />
+                        <TextBox x:Name="RightBottomLon" Text="{Binding RightBottomLon}" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Height="18" Margin="5,0" FontSize="14" FontFamily="Calibri" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lon" />
                     </Grid>
                 </Border>
                 <Border BorderBrush="#FF4D4D4D" Margin="7,10,7,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
@@ -59,10 +81,31 @@
                         <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="4"/>
                         <Label HorizontalAlignment="Center" Grid.ColumnSpan="4" VerticalAlignment="Center" Content="Grid settings" Foreground="White" Margin="0" FontSize="14" Background="{x:Null}" FontFamily="Calibri" Height="26" />
                         <Label Content="Square size in meters" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" FontFamily="Calibri" FontSize="14" Height="26" FontStyle="Italic" Grid.Column="1" Width="129"/>
-                        <ComboBox Text="{Binding SquareSize}" ItemsSource="{Binding SquareSizes}" Grid.Row="2" Grid.Column="2" Margin="0,4" Width="100" HorizontalAlignment="Left" IsEditable="True" StaysOpenOnEdit="True" />
+                        <ComboBox x:Name="SquareSize" Text="{Binding SquareSize}" ItemsSource="{Binding SquareSizes}" Grid.Row="2" Grid.Column="2" Margin="0,4" Width="100" HorizontalAlignment="Left" IsEditable="True" StaysOpenOnEdit="True" />
                     </Grid>
                 </Border>
-                <Button Command="{Binding CreateGridCommand}" Content="Create grid file 📁" Margin="7,12,7,10" Height="30" FontFamily="Calibri" FontSize="16" Foreground="#FF4D4D4D" Background="#FFDDDDDD" BorderBrush="#FF4D4D4D" />
+                <Button Command="{Binding CreateGridCommand}" Content="Create grid file 📁" Margin="7,12,7,10" Height="30" FontFamily="Calibri" FontSize="16" BorderThickness="1,1,1,1">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LeftTopLat}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LeftTopLon}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RightBottomLat}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RightBottomLon}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=SquareSize}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="Background" Value="#FFD4EFFF" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="BorderBrush" Value="#FF4D4D4D" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
         </ScrollViewer>
     </Grid>

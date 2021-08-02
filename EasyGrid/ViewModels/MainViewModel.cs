@@ -7,7 +7,10 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace EasyGrid.ViewModels
@@ -19,24 +22,20 @@ namespace EasyGrid.ViewModels
         private readonly CreateGridProvider createGridProvider;
         private readonly ConvertGridToGpxProvider convertGridToGpxProvider;
         private readonly SaveGpxProvider saveGpxProvider;
+
         private readonly SaveFileDialog saveFileDialog;
+        private readonly OpenFileDialog openFileDialog;
 
         public MainViewModel()
         {
             settingsProvider = new SettingsProvider();
-
-            squareSizes = new[] { 500, 250, 200, 100 };
-            squareSize = settingsProvider.LastSquareSize;
-
-            lastSelectionProvider = new SASLastSelectionProvider();
-            SetSelection(lastSelectionProvider.GetLastSelection());
+            SquareSizes = new[] { 500, 250, 200, 100 };
+            LoadSettings();
 
             createGridProvider = new CreateGridProvider();
-
-            var creatorName = $"{Assembly.GetExecutingAssembly().GetName().Name} v{Assembly.GetExecutingAssembly().GetName().Version?.Major}.{Assembly.GetExecutingAssembly().GetName().Version?.Minor}";
-            convertGridToGpxProvider = new ConvertGridToGpxProvider(creatorName);
-            
+            convertGridToGpxProvider = new ConvertGridToGpxProvider(CreatorName);
             saveGpxProvider = new SaveGpxProvider();
+            lastSelectionProvider = new SASLastSelectionProvider();
 
             saveFileDialog = new SaveFileDialog
             {
@@ -44,62 +43,133 @@ namespace EasyGrid.ViewModels
                 RestoreDirectory = true
             };
 
-        }
-
-        public ICommand CreateGridCommand
-        {
-            get
+            openFileDialog = new OpenFileDialog()
             {
-                return new CreateGridCommand((obj) =>
-                {
-                    saveFileDialog.InitialDirectory = GetLastSaveDirectory();
-                    saveFileDialog.FileName = $"Grid_{squareSize}_{DateTime.Now:yyyy-MM-dd}";
+                Filter = "SAS Planet selection file (*.hlg)|*.hlg",
+                InitialDirectory = Path.GetDirectoryName(SASPlanetPath) ?? string.Empty,
+                FileName = Path.GetFileName(SASPlanetPath) ?? string.Empty,
+                RestoreDirectory = true
+            };
 
-                    if (saveFileDialog.ShowDialog() == true)
-                    {
-                        var grid = createGridProvider.CreateGrid(leftTopLat, leftTopLon, rightBottomLat, rightBottomLon, squareSize);
-                        var gpx = convertGridToGpxProvider.ConvertToGpx(grid);
-                        saveGpxProvider.Save(gpx, saveFileDialog.FileName);
-                        UpdateSettings();
-                    }
-                });
+            SelectSASPlanetCommand = new DelegateCommand(SelectSASPlanet, () => true);
+            CopyCoordinatesCommand = new DelegateCommand(CopyFromSASPlanet, CanCopyFromSASPlanet);
+            CreateGridCommand = new DelegateCommand(CreateGrid, CanCreateGrid);
+
+            if (CopyCoordinatesCommand.CanExecute(null))
+            {
+                CopyCoordinatesCommand.Execute(null);
             }
         }
 
-        public ICommand CopyCoordinatesCommand
+        public ICommand SelectSASPlanetCommand { get; }
+        public ICommand CopyCoordinatesCommand { get; }
+        public ICommand CreateGridCommand { get; }
+
+        private bool IsValid()
         {
-            get
+            var leftTopLatValid = LeftTopLat is <= 180 and >= -180;
+            var leftTopLonValid = LeftTopLon is <= 180 and >= -180;
+            var rightBottomLatValid = RightBottomLat is <= 180 and >= -180;
+            var rightBottomLonValid = RightBottomLon is <= 180 and >= -180;
+            return leftTopLatValid && leftTopLonValid && rightBottomLatValid && rightBottomLonValid;
+        }
+
+        private bool CanCopyFromSASPlanet()
+        {
+            return File.Exists(SASPlanetPath);
+        }
+
+        private bool CanCreateGrid()
+        {
+            if (!IsValid())
             {
-                return new CopyCoordinatesCommand((obj) =>
-                {
-                    SetSelection(lastSelectionProvider.GetLastSelection());
-                });
+                return false;
+            }
+
+            if (LeftTopLat == 0 && LeftTopLon == 0 && RightBottomLat == 0 && RightBottomLon == 0)
+            {
+                return false;
+            }
+
+            return SquareSize > 0;
+        }
+
+        private void SelectSASPlanet()
+        {
+            if (openFileDialog.ShowDialog() == true)
+            {
+                SASPlanetPath = openFileDialog.FileName;
+
+                SaveSettings();
             }
         }
 
-        private void SetSelection(GeoPoint[] points)
+        private void CopyFromSASPlanet()
         {
+            if (!File.Exists(SASPlanetPath))
+            {
+                return;
+            }
+
+            var points = lastSelectionProvider.GetLastSelection(SASPlanetPath);
             LeftTopLat = points[0].Lat;
             LeftTopLon = points[0].Lon;
             RightBottomLat = points[1].Lat;
             RightBottomLon = points[1].Lon;
         }
 
-        private void UpdateSettings()
+        private void CreateGrid()
         {
-            settingsProvider.LastFilePath = saveFileDialog.FileName;
-            settingsProvider.LastSquareSize = SquareSize;
-            settingsProvider.Save();
+            saveFileDialog.InitialDirectory = Path.GetDirectoryName(LastSavePath) ?? string.Empty;
+            saveFileDialog.FileName = $"Grid_{squareSize}_{DateTime.Now:yyyy-MM-dd}";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var grid = createGridProvider.CreateGrid(LeftTopLat, LeftTopLon, RightBottomLat, RightBottomLon, SquareSize);
+                var gpx = convertGridToGpxProvider.ConvertToGpx(grid);
+                saveGpxProvider.Save(gpx, saveFileDialog.FileName);
+
+                SaveSettings();
+            }
         }
 
-        private string GetLastSaveDirectory()
+        private void LoadSettings()
         {
-            var lastDirectoryPath = Path.GetFullPath(Path.GetDirectoryName(settingsProvider.LastFilePath) ?? string.Empty);
-            if (Directory.Exists(lastDirectoryPath))
+            SASPlanetPath = settingsProvider.SASPlanetParameters.LastSelectionPath;
+            LastSavePath = settingsProvider.LastCreateParameters.LastSavePath;
+            SquareSize = settingsProvider.LastCreateParameters.SquareSize == 0 ? 500 : settingsProvider.LastCreateParameters.SquareSize;
+        }
+
+        private void SaveSettings()
+        {
+            settingsProvider.SASPlanetParameters.LastSelectionPath = SASPlanetPath;
+            settingsProvider.LastCreateParameters.LastSavePath = LastSavePath;
+            settingsProvider.LastCreateParameters.SquareSize = SquareSize;
+            settingsProvider.Save();
+        }
+        
+        public string CreatorName => $"{Assembly.GetExecutingAssembly().GetName().Name} v{Assembly.GetExecutingAssembly().GetName().Version?.Major}.{Assembly.GetExecutingAssembly().GetName().Version?.Minor}";
+
+        private string sasPlanetPath;
+        public string SASPlanetPath
+        {
+            get => sasPlanetPath;
+            set
             {
-                return lastDirectoryPath;
+                sasPlanetPath = value;
+                RaisePropertyChanged(() => SASPlanetPath);
             }
-            return Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+        }
+
+        private string lastSavePath;
+        public string LastSavePath
+        {
+            get => lastSavePath;
+            set
+            {
+                lastSavePath = value;
+                RaisePropertyChanged(() => LastSavePath);
+            }
         }
 
         private double leftTopLat;

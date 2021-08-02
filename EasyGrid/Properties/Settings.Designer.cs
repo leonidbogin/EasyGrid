@@ -13,7 +13,7 @@ namespace EasyGrid.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
@@ -25,25 +25,23 @@ namespace EasyGrid.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastFilePath {
+        public global::EasyGrid.Models.LastCreateParametersModel LastCreateParameters {
             get {
-                return ((string)(this["LastFilePath"]));
+                return ((global::EasyGrid.Models.LastCreateParametersModel)(this["LastCreateParameters"]));
             }
             set {
-                this["LastFilePath"] = value;
+                this["LastCreateParameters"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("500")]
-        public int LastSquareSize {
+        public global::EasyGrid.Models.SASPlanetParametersModel SASPlanetParameters {
             get {
-                return ((int)(this["LastSquareSize"]));
+                return ((global::EasyGrid.Models.SASPlanetParametersModel)(this["SASPlanetParameters"]));
             }
             set {
-                this["LastSquareSize"] = value;
+                this["SASPlanetParameters"] = value;
             }
         }
     }

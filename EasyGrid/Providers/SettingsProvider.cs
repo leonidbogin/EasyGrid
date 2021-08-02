@@ -1,9 +1,11 @@
-﻿namespace EasyGrid.Providers
+﻿using EasyGrid.Models;
+
+namespace EasyGrid.Providers
 {
     public class SettingsProvider
     {
-        public string LastFilePath { get; set; }
-        public int LastSquareSize { get; set; }
+        public LastCreateParametersModel LastCreateParameters { get; set; }
+        public SASPlanetParametersModel SASPlanetParameters { get; set; }
 
 
         public SettingsProvider()
@@ -13,14 +15,14 @@
 
         public void Refresh()
         {
-            LastFilePath = Properties.Settings.Default.LastFilePath;
-            LastSquareSize = Properties.Settings.Default.LastSquareSize;
+            LastCreateParameters = Properties.Settings.Default.LastCreateParameters ?? new LastCreateParametersModel();
+            SASPlanetParameters = Properties.Settings.Default.SASPlanetParameters ?? new SASPlanetParametersModel();
         }
 
         public void Save()
         {
-            Properties.Settings.Default.LastFilePath = LastFilePath;
-            Properties.Settings.Default.LastSquareSize = LastSquareSize;
+            Properties.Settings.Default.LastCreateParameters = LastCreateParameters;
+            Properties.Settings.Default.SASPlanetParameters = SASPlanetParameters;
             Properties.Settings.Default.Save();
         }
     }
