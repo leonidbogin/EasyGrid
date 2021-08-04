@@ -25,15 +25,8 @@ namespace EasyGrid.Core.Providers
 
             if (cancellationToken.IsCancellationRequested) return;
 
-            try
-            {
-                var task = Task.Factory.StartNew(Save, (gpx, path), cancellationToken);
-                await task.WaitAsync(cancellationToken);
-            }
-            catch (OperationCanceledException)
-            {
-                return;
-            }
+            var task = Task.Factory.StartNew(Save, (gpx, path), cancellationToken);
+            await task.WaitAsync(cancellationToken);
             
             LogProgress(100);
         }
