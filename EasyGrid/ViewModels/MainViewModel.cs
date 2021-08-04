@@ -118,31 +118,37 @@ namespace EasyGrid.ViewModels
                     isWorking = true;
                     ProgressBar.Show();
 
-                    var grid = createGridProvider.CreateGrid(GridParameters.LeftTopLat, GridParameters.LeftTopLon, 
-                        GridParameters.RightBottomLat, GridParameters.RightBottomLon, GridParameters.SquareSize, cancellationToken);
-
-                    if (cancellationToken.IsCancellationRequested) return;
-
-                    var gpx = convertGridToGpxProvider.ConvertToGpx(grid, cancellationToken);
-                    if (cancellationToken.IsCancellationRequested) return;
-
-                    saveGpxProvider.SaveAsync(gpx, saveFileDialog.FileName, cancellationToken).Wait(cancellationToken);
-                    if (cancellationToken.IsCancellationRequested) return;
-
-                    ProgressBar.Status = "Ready";
-                    var result = resultProvider.GetResult(grid.GetLength(0), grid.GetLength(1), saveFileDialog.FileName, GridParameters, cancellationToken);
-                    Application.Current.Dispatcher.Invoke(() =>
+                    try
                     {
-                        resultWindow ??= new ResultWindow(windowInstance);
-                        resultWindow.SetData(result);
-                        resultWindow.Show();
-                    });
+                        var grid = createGridProvider.CreateGrid(GridParameters.LeftTopLat, GridParameters.LeftTopLon,
+                            GridParameters.RightBottomLat, GridParameters.RightBottomLon, GridParameters.SquareSize,
+                            cancellationToken);
+                        var gpx = convertGridToGpxProvider.ConvertToGpx(grid, cancellationToken);
+                        saveGpxProvider.SaveAsync(gpx, saveFileDialog.FileName, cancellationToken)
+                            .Wait(cancellationToken);
 
-                }, cancellationToken).ContinueWith(task =>
-                {
-                    isWorking = false;
-                    Application.Current.Dispatcher.Invoke(CommandManager.InvalidateRequerySuggested);
-                    ProgressBar.Hide().Reset();
+                        if (!cancellationToken.IsCancellationRequested)
+                        {
+                            ProgressBar.Status = "Ready";
+                            var result = resultProvider.GetResult(grid.GetLength(0), grid.GetLength(1),
+                                saveFileDialog.FileName, GridParameters, cancellationToken);
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                resultWindow ??= new ResultWindow(windowInstance);
+                                resultWindow.SetData(result);
+                                resultWindow.Show();
+                            });
+                        }
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                    finally
+                    {
+                        isWorking = false;
+                        Application.Current.Dispatcher.Invoke(CommandManager.InvalidateRequerySuggested);
+                        ProgressBar.Hide().Reset();
+                    }
 
                 }, cancellationToken);
 
