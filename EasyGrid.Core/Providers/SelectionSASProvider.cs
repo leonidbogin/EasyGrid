@@ -7,14 +7,18 @@ namespace EasyGrid.Core.Providers
     public class SelectionSASProvider
     {
         private readonly IniFileParser.IniFileParser parser;
+        private readonly string fileName;
 
-        public SelectionSASProvider()
+        public SelectionSASProvider(string fileName)
         {
             parser = new IniFileParser.IniFileParser();
+            this.fileName = fileName;
         }
 
-        public LastSelection GetLastSelection(string path)
+        public LastSelection GetLastSelection(string directoryPath)
         {
+            var path = Path.Combine(directoryPath, fileName);
+
             if (!File.Exists(path))
             {
                 throw new FileNotFoundException($"{path} file not found");
@@ -36,6 +40,17 @@ namespace EasyGrid.Core.Providers
             };
 
             return lastSelection;
+        }
+
+        public bool FileExists(string directoryPath)
+        {
+            if (directoryPath is null)
+            {
+                return false;
+            }
+
+            var path = Path.Combine(directoryPath, fileName);
+            return File.Exists(path);
         }
 
         private static double Parse(string value)

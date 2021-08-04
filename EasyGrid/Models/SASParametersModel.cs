@@ -5,6 +5,6 @@ namespace EasyGrid.Models
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public class SASParametersModel
     {
-        public string LastSelectionPath { get; set; }
+        public string SASPath { get; set; }
     }
 }

@@ -1,16 +1,17 @@
-﻿using DevExpress.Mvvm;
-using EasyGrid.Core.Providers;
-using EasyGrid.Providers;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
+using DevExpress.Mvvm;
+using EasyGrid.Core.Providers;
 using EasyGrid.Models;
+using EasyGrid.Providers;
 using EasyGrid.Views;
+using Application = System.Windows.Application;
 
 namespace EasyGrid.ViewModels
 {
@@ -32,13 +33,13 @@ namespace EasyGrid.ViewModels
         private readonly SelectionSASProvider selectionProvider;
         private readonly ResultProvider resultProvider;
         private readonly SaveFileDialog saveFileDialog;
-        private readonly OpenFileDialog openFileDialog;
+        private readonly FolderBrowserDialog openFileDialog;
         private ResultWindow resultWindow;
 
         private CancellationTokenSource cancellationTokenSource;
         private SettingsProvider settingsProvider;
         private bool isWorking;
-        private string sasLastSelectionPath;
+        private string sasDirectoryPath;
         private string lastSavePath;
 
         public MainViewModel(Window windowInstance)
@@ -50,28 +51,25 @@ namespace EasyGrid.ViewModels
 
             LoadSettings();
 
-            selectionProvider = new SelectionSASProvider();
+            selectionProvider = new SelectionSASProvider("LastSelection.hlg");
             createGridProvider = new CreateGridProvider();
             convertGridToGpxProvider = new ConvertGridToGpxProvider(WindowTitle);
             saveGpxProvider = new SaveGpxProvider(false);
             resultProvider = new ResultProvider();
 
-            saveFileDialog = new SaveFileDialog
+            saveFileDialog = new SaveFileDialog()
             {
-                Filter = "GPX file (*.gpx)|*.gpx",
+                Filter = @"GPX file (*.gpx)|*.gpx",
                 RestoreDirectory = true
             };
 
-            openFileDialog = new OpenFileDialog()
+            openFileDialog = new FolderBrowserDialog()
             {
-                Filter = "SAS Planet selection file (*.hlg)|*.hlg",
-                InitialDirectory = Path.GetDirectoryName(sasLastSelectionPath) ?? string.Empty,
-                FileName = Path.GetFileName(sasLastSelectionPath) ?? string.Empty,
-                RestoreDirectory = true
+                RootFolder = Environment.SpecialFolder.Desktop
             };
 
             SelectSASCommand = new DelegateCommand(SelectSAS);
-            CopySASCommand = new DelegateCommand(CopyFromSAS, () => File.Exists(sasLastSelectionPath));
+            CopySASCommand = new DelegateCommand(CopyFromSAS, () => selectionProvider.FileExists(sasDirectoryPath));
             CreateGridCommand = new DelegateCommand(CreateGrid, () => !isWorking && GridParameters.IsValid());
             CancelCreateGridCommand = new DelegateCommand(CancelCreateGrid, () => isWorking);
 
@@ -92,16 +90,16 @@ namespace EasyGrid.ViewModels
 
         private void SelectSAS()
         {
-            if (openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                sasLastSelectionPath = openFileDialog.FileName;
+                sasDirectoryPath = openFileDialog.SelectedPath;
                 SaveSettings();
             }
         }
 
         private void CopyFromSAS()
         {
-            var lastSelection = selectionProvider.GetLastSelection(sasLastSelectionPath);
+            var lastSelection = selectionProvider.GetLastSelection(sasDirectoryPath);
             GridParameters.SetSelection(lastSelection);
         }
 
@@ -110,7 +108,7 @@ namespace EasyGrid.ViewModels
             saveFileDialog.InitialDirectory = Path.GetDirectoryName(lastSavePath) ?? string.Empty;
             saveFileDialog.FileName = $"Grid_{GridParameters.SquareSize}_{DateTime.Now:yyyy-MM-dd}";
 
-            if (saveFileDialog.ShowDialog() == true)
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 cancellationTokenSource = new CancellationTokenSource();
                 var cancellationToken = cancellationTokenSource.Token;
@@ -160,14 +158,14 @@ namespace EasyGrid.ViewModels
         private void LoadSettings()
         {
             settingsProvider = new SettingsProvider();
-            sasLastSelectionPath = settingsProvider.SASPlanetParameters.LastSelectionPath;
+            sasDirectoryPath = settingsProvider.SASPlanetParameters.SASPath;
             lastSavePath = settingsProvider.LastCreateParameters.LastSavePath;
             GridParameters.SquareSize = settingsProvider.LastCreateParameters.SquareSize == 0 ? 500 : settingsProvider.LastCreateParameters.SquareSize;
         }
 
         private void SaveSettings()
         {
-            settingsProvider.SASPlanetParameters.LastSelectionPath = sasLastSelectionPath;
+            settingsProvider.SASPlanetParameters.SASPath = sasDirectoryPath;
             settingsProvider.LastCreateParameters.LastSavePath = lastSavePath;
             settingsProvider.LastCreateParameters.SquareSize = GridParameters.SquareSize;
             settingsProvider.Save();

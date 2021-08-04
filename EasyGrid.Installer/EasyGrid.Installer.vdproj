@@ -74,6 +74,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -183,7 +191,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EasyGrid"
         "ProductCode" = "8:{7F5D0CCE-E6D4-49A2-ACAB-73D9F10C88F0}"
-        "PackageCode" = "8:{72B902C8-2F3A-44D9-8445-596AFF47281C}"
+        "PackageCode" = "8:{73B8083F-80A6-48C1-BAAE-D8930475BF95}"
         "UpgradeCode" = "8:{C12FF1A8-53FF-406A-A213-448D739514B9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -194,7 +202,7 @@
         "Manufacturer" = "8:Psoinfo"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://vk.com/psoinfo"
-        "Title" = "8:EasyGrid v1.0"
+        "Title" = "8:EasyGrid"
         "Subject" = "8:"
         "ARPCONTACT" = "8:leonidbogin"
         "Keywords" = "8:"
