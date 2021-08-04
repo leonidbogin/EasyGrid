@@ -25,23 +25,23 @@ namespace EasyGrid.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::EasyGrid.Models.LastCreateParametersModel LastCreateParameters {
+        public global::EasyGrid.Models.LastParametersModel LastParameters {
             get {
-                return ((global::EasyGrid.Models.LastCreateParametersModel)(this["LastCreateParameters"]));
+                return ((global::EasyGrid.Models.LastParametersModel)(this["LastParameters"]));
             }
             set {
-                this["LastCreateParameters"] = value;
+                this["LastParameters"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::EasyGrid.Models.SASPlanetParametersModel SASPlanetParameters {
+        public global::EasyGrid.Models.SASParametersModel SASParameters {
             get {
-                return ((global::EasyGrid.Models.SASPlanetParametersModel)(this["SASPlanetParameters"]));
+                return ((global::EasyGrid.Models.SASParametersModel)(this["SASParameters"]));
             }
             set {
-                this["SASPlanetParameters"] = value;
+                this["SASParameters"] = value;
             }
         }
     }

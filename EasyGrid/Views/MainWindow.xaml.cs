@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using EasyGrid.ViewModels;
 
 namespace EasyGrid.Views
 {
@@ -10,6 +11,7 @@ namespace EasyGrid.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel(this);
         }
     }
 }

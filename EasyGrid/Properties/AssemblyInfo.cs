@@ -6,9 +6,9 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("EasyGrid")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Program for generating a coordinate grid")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("leonidbogin")]
+[assembly: AssemblyCompany("Psoinfo")]
 [assembly: AssemblyProduct("EasyGrid")]
 [assembly: AssemblyCopyright("Copyright ©leonidbogin 2021")]
 [assembly: AssemblyTrademark("")]

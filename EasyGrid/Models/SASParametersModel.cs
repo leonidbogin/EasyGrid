@@ -3,7 +3,7 @@
 namespace EasyGrid.Models
 {
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public class SASPlanetParametersModel
+    public class SASParametersModel
     {
         public string LastSelectionPath { get; set; }
     }

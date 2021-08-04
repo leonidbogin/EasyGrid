@@ -4,8 +4,8 @@ namespace EasyGrid.Providers
 {
     public class SettingsProvider
     {
-        public LastCreateParametersModel LastCreateParameters { get; set; }
-        public SASPlanetParametersModel SASPlanetParameters { get; set; }
+        public LastParametersModel LastCreateParameters { get; set; }
+        public SASParametersModel SASPlanetParameters { get; set; }
 
 
         public SettingsProvider()
@@ -15,14 +15,14 @@ namespace EasyGrid.Providers
 
         public void Refresh()
         {
-            LastCreateParameters = Properties.Settings.Default.LastCreateParameters ?? new LastCreateParametersModel();
-            SASPlanetParameters = Properties.Settings.Default.SASPlanetParameters ?? new SASPlanetParametersModel();
+            LastCreateParameters = Properties.Settings.Default.LastParameters ?? new LastParametersModel();
+            SASPlanetParameters = Properties.Settings.Default.SASParameters ?? new SASParametersModel();
         }
 
         public void Save()
         {
-            Properties.Settings.Default.LastCreateParameters = LastCreateParameters;
-            Properties.Settings.Default.SASPlanetParameters = SASPlanetParameters;
+            Properties.Settings.Default.LastParameters = LastCreateParameters;
+            Properties.Settings.Default.SASParameters = SASPlanetParameters;
             Properties.Settings.Default.Save();
         }
     }

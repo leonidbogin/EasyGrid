@@ -5,6 +5,17 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <ApplicationIcon>Resources\icon_setup.ico</ApplicationIcon>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <Authors>leonidbogin</Authors>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>EasyGrid.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Views\icon.png" />
@@ -12,14 +23,20 @@
     <None Remove="Views\logo_angel_nov_S_NADPIS_Yu-bel_2.png" />
     <None Remove="Views\logo_angel_nov_S_NADPIS_Yu-bel_2_3.png" />
     <None Remove="Views\logo_text.png" />
+    <None Include="Resources\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="DevExpress.Data" Version="21.1.4" />
     <PackageReference Include="DevExpressMvvm" Version="20.2.3" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.2.237901">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EasyGrid.Core\EasyGrid.Core.csproj" />

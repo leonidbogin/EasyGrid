@@ -3,12 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:EasyGrid.ViewModels"
+        xmlns:viewModels="clr-namespace:EasyGrid.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
         mc:Ignorable="d"
-        Title="{Binding CreatorName}" ResizeMode="NoResize" SizeToContent="WidthAndHeight" UseLayoutRounding="False" WindowStartupLocation="CenterScreen" Icon="/Resources/icon.png">
-    <Window.DataContext>
-        <viewModels:MainViewModel/>
-    </Window.DataContext>
+        Title="{Binding WindowTitle}" ResizeMode="NoResize" SizeToContent="WidthAndHeight" UseLayoutRounding="False" WindowStartupLocation="CenterScreen" Icon="/Resources/icon.png">
     <Grid Background="#FFFBFBFB">
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
             <StackPanel>
@@ -38,9 +36,9 @@
                         <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="5" HorizontalAlignment="Stretch"/>
                         <Label HorizontalAlignment="Center"  Grid.ColumnSpan="5" VerticalAlignment="Center" Content="SAS Planet" Foreground="White" Margin="0" FontSize="14" Background="{x:Null}" FontFamily="Calibri" Height="26" />
                         <Label Content="Select the path to SAS Planet" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Center" FontFamily="Calibri" FontSize="15" Grid.ColumnSpan="4" FontStyle="Italic" Grid.Column="1"/>
-                        <Button Command="{Binding SelectSASPlanetCommand}" Grid.Row="2" Margin="5,3,5,3" MinWidth="100" Grid.Column="3" Content="Select SAS Planet" HorizontalAlignment="Stretch" />
+                        <Button Command="{Binding SelectSASCommand}" Grid.Row="2" Margin="5,3,5,3" MinWidth="100" Grid.Column="3" Content="Select SAS Planet" HorizontalAlignment="Stretch" />
                         <Label Content="Copy selection from SAS Planet" HorizontalAlignment="Left" Margin="0" Grid.Row="4" VerticalAlignment="Center" FontFamily="Calibri" FontSize="15" Grid.ColumnSpan="4" FontStyle="Italic" Grid.Column="1"/>
-                        <Button Command="{Binding CopyCoordinatesCommand}" Grid.Row="4" Margin="5,3,5,3" MinWidth="100" Grid.Column="3" Content="Copy and paste" HorizontalAlignment="Stretch" />
+                        <Button Command="{Binding CopySASCommand}" Grid.Row="4" Margin="5,3,5,3" MinWidth="100" Grid.Column="3" Content="Copy and paste" HorizontalAlignment="Stretch" />
                     </Grid>
                 </Border>
                 <Border BorderBrush="#FF4D4D4D" Margin="40,10,40,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
@@ -63,11 +61,11 @@
                         <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="6" HorizontalAlignment="Stretch"/>
                         <Label HorizontalAlignment="Center"  Grid.ColumnSpan="6" VerticalAlignment="Center" Content="First and last point" Foreground="White" Margin="0" FontSize="14" Background="{x:Null}" FontFamily="Calibri" Height="26" />
                         <Label Content="Top left" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" FontFamily="Calibri" FontSize="14" Height="26" FontStyle="Italic" Grid.Column="1"/>
-                        <TextBox x:Name="LeftTopLat" Text="{Binding LeftTopLat}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Height="18" Margin="5,0" FontFamily="Calibri" FontSize="14" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lat"/>
-                        <TextBox x:Name="LeftTopLon" Text="{Binding LeftTopLon}" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Height="18" Margin="5,0" FontSize="14" FontFamily="Calibri" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lon" />
+                        <TextBox x:Name="LeftTopLat" Text="{Binding GridParameters.LeftTopLat}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Height="18" Margin="5,0" FontFamily="Calibri" FontSize="14" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lat"/>
+                        <TextBox x:Name="LeftTopLon" Text="{Binding GridParameters.LeftTopLon}" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Height="18" Margin="5,0" FontSize="14" FontFamily="Calibri" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lon" />
                         <Label Content="Bottom right" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" FontFamily="Calibri" FontSize="14" Height="26" FontStyle="Italic" Grid.Column="1"/>
-                        <TextBox x:Name="RightBottomLat" Text="{Binding RightBottomLat}" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Height="18" Margin="5,0" FontFamily="Calibri" FontSize="14" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lat" />
-                        <TextBox x:Name="RightBottomLon" Text="{Binding RightBottomLon}" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Height="18" Margin="5,0" FontSize="14" FontFamily="Calibri" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lon" />
+                        <TextBox x:Name="RightBottomLat" Text="{Binding GridParameters.RightBottomLat}" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Height="18" Margin="5,0" FontFamily="Calibri" FontSize="14" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lat" />
+                        <TextBox x:Name="RightBottomLon" Text="{Binding GridParameters.RightBottomLon}" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Height="18" Margin="5,0" FontSize="14" FontFamily="Calibri" TextOptions.TextHintingMode="Animated" AutomationProperties.HelpText="Lon" />
                     </Grid>
                 </Border>
                 <Border BorderBrush="#FF4D4D4D" Margin="40,10,40,0" BorderThickness="1,0,1,1" Background="#FFF2F2F2">
@@ -87,31 +85,36 @@
                         <Rectangle Fill="#FF4D4D4D" Grid.ColumnSpan="4"/>
                         <Label HorizontalAlignment="Center" Grid.ColumnSpan="4" VerticalAlignment="Center" Content="Grid settings" Foreground="White" Margin="0" FontSize="14" Background="{x:Null}" FontFamily="Calibri" Height="26" />
                         <Label Content="Square size in meters" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" FontFamily="Calibri" FontSize="14" Height="26" FontStyle="Italic" Grid.Column="1" Width="129"/>
-                        <ComboBox x:Name="SquareSize" Text="{Binding SquareSize}" ItemsSource="{Binding SquareSizes}" Grid.Row="2" Grid.Column="2" Margin="0,4" Width="100" HorizontalAlignment="Left" IsEditable="True" StaysOpenOnEdit="True" />
+                        <ComboBox x:Name="SquareSize" Text="{Binding GridParameters.SquareSize}" ItemsSource="{Binding GridParameters.SquareSizes}" Grid.Row="2" Grid.Column="2" Margin="0,4" Width="100" HorizontalAlignment="Left" IsEditable="True" StaysOpenOnEdit="True" />
                     </Grid>
                 </Border>
-                <Button Command="{Binding CreateGridCommand}" Content="Create grid file 📁" Margin="40,18,40,25" Height="30" FontFamily="Calibri" FontSize="16" BorderThickness="1,1,1,1">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="IsEnabled" Value="False"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LeftTopLat}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LeftTopLon}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RightBottomLat}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RightBottomLon}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=SquareSize}" Value="False"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="IsEnabled" Value="True"/>
-                                    <Setter Property="Background" Value="#FFD4EFFF" />
-                                    <Setter Property="Foreground" Value="Black" />
-                                    <Setter Property="BorderBrush" Value="#FF4D4D4D" />
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                <Grid Margin="40,18,40,25" Height="30">
+                    <Button Command="{Binding CreateGridCommand}" Content="Create grid file 📁" FontFamily="Calibri" FontSize="16" BorderThickness="1,1,1,1" Margin="0,0,65,0" Grid.RowSpan="3" Panel.ZIndex="1">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LeftTopLat}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=LeftTopLon}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RightBottomLat}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=RightBottomLon}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=SquareSize}" Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Setter Property="Background" Value="#FFD4EFFF" />
+                                        <Setter Property="Foreground" Value="Black" />
+                                        <Setter Property="BorderBrush" Value="#FF4D4D4D" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <ProgressBar Margin="0,0,65,0" Value="{Binding ProgressBar.Progress, Mode=OneWay}" Visibility="{Binding ProgressBar.Visibility}" Grid.Row="0" Panel.ZIndex="100" IsIndeterminate="{Binding ProgressBar.IsIndeterminate}" />
+                    <Label Content="{Binding ProgressBar.Status}"  Margin="0,0,65,0" Visibility="{Binding ProgressBar.Visibility}" Grid.Row="0" Panel.ZIndex="100" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Button Command="{Binding CancelCreateGridCommand}" Content="Cancel" FontFamily="Calibri" FontSize="16" BorderThickness="1,1,1,1" HorizontalAlignment="Right" Width="60" Grid.Row="0"/>
+                </Grid>
             </StackPanel>
         </ScrollViewer>
     </Grid>
