@@ -9,9 +9,9 @@
         mc:Ignorable="d"
         Background="#FF1E1E1E"
         x:Name="Window"
-        Title="EasyGrid" Height="300" Width="400" MouseDown="Window_MouseDown" ResizeMode="CanResizeWithGrip" MouseUp="Window_MouseUp" MouseMove="Window_MouseMove">
+        Title="EasyGrid" Height="300" Width="400">
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" GlassFrameThickness="0" CornerRadius="0"></WindowChrome>
+        <WindowChrome CaptionHeight="30" GlassFrameThickness="0" CornerRadius="0" />
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <Style x:Key="MenuButtonStyle" TargetType="Button">
@@ -44,13 +44,13 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="WindowHead" Grid.Row="0" Background="#FF323233" MouseDown="Title_MouseDown" >
+            <Grid x:Name="WindowHead" Grid.Row="0" Background="#FF323233" >
                 <!--<Image Grid.Row="0" Width="30" HorizontalAlignment="Left" Margin="0,3,0,0" Stretch="Uniform" StretchDirection="Both" Source="/favicon.png"/>-->
-                <Label Grid.Row="0" Content="EasyGrid" HorizontalAlignment="Left" Margin="5,2,0,0" Foreground="#FF828181" FontFamily="Arial" FontSize="15"/>
-                <Label Grid.Row="0" Content="v1.2" HorizontalAlignment="Left" Margin="70,7,0,0" Foreground="#FF828181" FontFamily="Arial" FontSize="10"/>
-                <Button Grid.Row="0" Command="{Binding CloseWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Window}" Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" BorderBrush="Red" />
-                <Button Grid.Row="0" Command="{Binding MaximazeWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Window}" Style="{StaticResource MaximizeButtonStyle}" HorizontalAlignment="Right" Margin="0,0,45,0"/>
-                <Button Grid.Row="0" Command="{Binding MinimazeWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Window}" Style="{StaticResource MinimizeButtonStyle}" HorizontalAlignment="Right" Margin="0,0,90,0"/>
+                <Label Grid.Row="0" Content="EasyGrid" HorizontalAlignment="Left" Margin="0,2,0,0" Foreground="#FF828181" FontFamily="Arial" FontSize="14" />
+                <Label Grid.Row="0" Content="v1.2" HorizontalAlignment="Left" Margin="60,7,0,0" Foreground="#FF828181" FontFamily="Arial" FontSize="9"/>
+                <Button Grid.Row="0" Command="{Binding CloseWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Window}" Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" BorderBrush="Red" WindowChrome.IsHitTestVisibleInChrome="True" />
+                <Button Grid.Row="0" Command="{Binding MaximazeWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Window}" Style="{StaticResource MaximizeButtonStyle}" HorizontalAlignment="Right" Margin="0,0,45,0" WindowChrome.IsHitTestVisibleInChrome="True" />
+                <Button Grid.Row="0" Command="{Binding MinimazeWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Window}" Style="{StaticResource MinimizeButtonStyle}" HorizontalAlignment="Right" Margin="0,0,90,0" WindowChrome.IsHitTestVisibleInChrome="True" />
             </Grid>
             <Grid x:Name="WindowContent" Grid.Row="1">
                 <Grid.RowDefinitions>
