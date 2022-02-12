@@ -2,9 +2,9 @@
 
 namespace EasyGrid.Views
 {
-    public partial class CreateView : UserControl
+    public partial class SASPlanetCreateView : UserControl
     {
-        public CreateView()
+        public SASPlanetCreateView()
         {
             InitializeComponent();
         }

@@ -13,14 +13,16 @@ namespace EasyGrid
         {
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
-                    //Page ViewModels
-                    .AddTransient<CreateViewModel>()
-                    .AddTransient<SettingsViewModel>()
+                    //ViewModels
+                    .AddTransient<CoordinatesCreateViewModel>()
+                    .AddTransient<SASPlanetCreateViewModel>()
                     //Windows
                     .AddSingleton<MainViewModel>()
+                    //Core
                     .AddSingleton<IViewFactory, MappingViewFactory>()
                     .BuildServiceProvider());
 
+            //Start main window
             var window = new MainWindow { DataContext = Ioc.Default.GetRequiredService<MainViewModel>() };
             window.Show();
         }

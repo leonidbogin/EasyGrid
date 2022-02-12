@@ -3,18 +3,18 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace EasyGrid.ViewModels
 {
-    internal class SettingsViewModel : ObservableObject
+    internal class CoordinatesCreateViewModel : ObservableObject
     {
         public IRelayCommand LoadedCommand { get; }
 
-        public SettingsViewModel()
+        public CoordinatesCreateViewModel()
         {
             LoadedCommand = new RelayCommand(Loaded);
         }
 
         private void Loaded()
         {
-
+            
         }
     }
 }

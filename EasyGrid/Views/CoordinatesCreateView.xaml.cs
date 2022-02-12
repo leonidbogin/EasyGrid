@@ -2,9 +2,9 @@
 
 namespace EasyGrid.Views
 {
-    public partial class SetupView : UserControl
+    public partial class CoordinatesCreateView : UserControl
     {
-        public SetupView()
+        public CoordinatesCreateView()
         {
             InitializeComponent();
         }

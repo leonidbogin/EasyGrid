@@ -3,11 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace EasyGrid.ViewModels
 {
-    internal class CreateViewModel : ObservableObject
+    internal class SASPlanetCreateViewModel : ObservableObject
     {
         public IRelayCommand LoadedCommand { get; }
 
-        public CreateViewModel()
+        public SASPlanetCreateViewModel()
         {
             LoadedCommand = new RelayCommand(Loaded);
         }
