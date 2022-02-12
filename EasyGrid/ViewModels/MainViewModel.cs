@@ -20,6 +20,8 @@ namespace EasyGrid.ViewModels
 
         public ICommand CloseWindowCommand { get; }
         public ICommand MinimazeWindowCommand { get; }
+        public ICommand MaximazeWindowCommand { get; }
+
 
         public MainViewModel()
         {
@@ -28,6 +30,7 @@ namespace EasyGrid.ViewModels
 
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MinimazeWindowCommand = new RelayCommand<Window>(MinimazeWindow);
+            MaximazeWindowCommand = new RelayCommand<Window>(MaximazeWindow);
 
             SelectedViewModel = Ioc.Default.GetRequiredService<CreateViewModel>();
         }
@@ -43,6 +46,19 @@ namespace EasyGrid.ViewModels
         private static void CloseWindow(Window window)
         {
             window?.Close();
+        }
+
+        private static void MaximazeWindow(Window window)
+        {
+            if (window != null)
+            {
+                window.WindowState = window.WindowState switch
+                {
+                    WindowState.Normal => WindowState.Maximized,
+                    WindowState.Maximized => WindowState.Normal,
+                    _ => window.WindowState
+                };
+            }
         }
     }
 }
