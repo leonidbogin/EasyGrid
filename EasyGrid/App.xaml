@@ -59,5 +59,53 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="PageLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="#969696"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+        <Style x:Key="ArticleLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="#969696"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key="SmallArticleLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="#969696"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#3C3C3C"/>
+            <Setter Property="Foreground" Value="#969696"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Width" Value="140"/>
+        </Style>
+
+        <Style x:Key="CreateButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3C3C3C" />
+            <Setter Property="Foreground" Value="#969696" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Name="ButtonBorder" Background="{TemplateBinding Background}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <ContentControl Name="ButtonContent" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" Foreground="{TemplateBinding Foreground}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2b2b2b" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </Application.Resources>
 </Application>

@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\grid1.png" />
+    <None Remove="Views\grid9.png" />
+    <None Remove="Views\gridSize.png" />
+    <None Remove="Views\gridSquareSize.png" />
+    <None Remove="Views\gridSquareSize2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
@@ -28,6 +36,12 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\grid1.png" />
+    <Resource Include="Assets\grid9.png" />
+    <Resource Include="Assets\gridSquareSize2.png" />
   </ItemGroup>
 
 </Project>

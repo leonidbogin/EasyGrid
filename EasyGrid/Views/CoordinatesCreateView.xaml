@@ -4,19 +4,48 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyGrid.Views"
-      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+      d:DataContext="{d:DesignInstance Type=viewModels:CoordinatesCreateViewModel}"
       xmlns:viewModels="clr-namespace:EasyGrid.ViewModels"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="400">
+      Background="#FF1E1E1E"
+      d:DesignHeight="400" d:DesignWidth="500">
     <UserControl.DataContext>
         <viewModels:CoordinatesCreateViewModel />
     </UserControl.DataContext>
-    <b:Interaction.Triggers>
-        <b:EventTrigger EventName="Loaded">
-            <b:InvokeCommandAction Command="{Binding LoadedCommand}"/>
-        </b:EventTrigger>
-    </b:Interaction.Triggers>
     <Grid>
-        <Label>Coordinates</Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="1"  Content="Create grid by boundary coordinates" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource PageLabelStyle}" Margin="0,10,0,0" />
+
+        <Image Grid.Row="2" Grid.Column="1" Margin="5,27,0,0" Width="30" Stretch="Uniform" Source="/Assets/grid1.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Top left point" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource SmallArticleLabelStyle}" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Point1Lat}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,27,0,0" Style="{StaticResource TextBoxStyle}" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Point1Lon}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="185,27,0,0" Style="{StaticResource TextBoxStyle}" />
+
+        <Image Grid.Row="4" Grid.Column="1" Margin="5,27,0,0" Width="30" Stretch="Uniform" Source="/Assets/grid9.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="Bottom right point" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource SmallArticleLabelStyle}" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Point9Lat}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,27,0,0" Style="{StaticResource TextBoxStyle}" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Point9Lon}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="185,27,0,0" Style="{StaticResource TextBoxStyle}" />
+
+        <Image Grid.Row="6" Grid.Column="1" Margin="5,27,0,0" Width="30" Height="30" Stretch="Uniform" Source="/Assets/gridSquareSize2.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Label Grid.Row="6" Grid.Column="1" Content="Square size in meters" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ArticleLabelStyle}" />
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding SquareSize}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,27,0,0" Width="60" Style="{StaticResource TextBoxStyle}" />
+
+        <Button Grid.Row="8" Grid.Column="1" Content="Create grid" Command="{Binding CreateCommand, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource CreateButtonStyle}"/>
     </Grid>
 </UserControl>
