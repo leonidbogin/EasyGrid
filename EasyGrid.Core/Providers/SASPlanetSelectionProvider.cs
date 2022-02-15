@@ -5,18 +5,18 @@ using System.IO;
 
 namespace EasyGrid.Core.Providers
 {
-    public class SASPlanetSelectionProvider
+    public class SasPlanetSelectionProvider
     {
         private readonly FileIniDataParser _parser;
         private readonly string _path;
 
-        public SASPlanetSelectionProvider(string path)
+        public SasPlanetSelectionProvider(string path)
         {
             _parser = new FileIniDataParser();
             _path = path;
         }
 
-        public SASPlanetSelection GetSelection()
+        public SasPlanetSelection GetSelection()
         {
             if (!File.Exists(_path))
             {
@@ -25,7 +25,7 @@ namespace EasyGrid.Core.Providers
 
             var data = _parser.ReadFile(_path);
 
-            return new SASPlanetSelection()
+            return new SasPlanetSelection()
             {
                 Zoom = Parse<int>(data["HIGHLIGHTING"]["PointLon_1"]),
                 PointLon1 = Parse<double>(data["HIGHLIGHTING"]["PointLon_1"]),

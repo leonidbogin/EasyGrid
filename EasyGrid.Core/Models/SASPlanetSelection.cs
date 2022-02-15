@@ -1,6 +1,6 @@
 ﻿namespace EasyGrid.Core.Models
 {
-    public class SASPlanetSelection
+    public class SasPlanetSelection
     {
         public int Zoom { get; set; }
         public double PointLon1 { get; set; }
