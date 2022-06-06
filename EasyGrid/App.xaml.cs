@@ -14,8 +14,8 @@ namespace EasyGrid
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                     //ViewModels
-                    .AddTransient<CoordinatesCreateViewModel>()
-                    .AddTransient<SASPlanetCreateViewModel>()
+                    .AddSingleton<CoordinatesCreateViewModel>()
+                    .AddSingleton<SASPlanetCreateViewModel>()
                     //Windows
                     .AddSingleton<MainViewModel>()
                     //Core

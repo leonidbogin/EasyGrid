@@ -42,7 +42,10 @@ namespace EasyGrid.ViewModels
 
         private ICommand CreateMenuCommand<T>() where T : ObservableObject
         {
-            var command = new RelayCommand(() => SelectedViewModel = Ioc.Default.GetRequiredService<T>(), () => !(SelectedViewModel is T));
+            var command = new RelayCommand(
+                () => SelectedViewModel = Ioc.Default.GetRequiredService<T>(),
+                () => !(SelectedViewModel is T));
+
             _menuCommands.Add(command);
             return command;
         }

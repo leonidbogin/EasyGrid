@@ -9,9 +9,9 @@
         mc:Ignorable="d"
         Background="#FF1E1E1E"
         x:Name="Window"
-        Title="EasyGrid" Height="400" Width="500">
+        Title="EasyGrid" Height="500" Width="500">
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30" GlassFrameThickness="0" CornerRadius="0" ResizeBorderThickness="5" />
+        <WindowChrome CaptionHeight="60" GlassFrameThickness="0" CornerRadius="0" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <Style x:Key="MenuButtonStyle" TargetType="Button">
@@ -73,8 +73,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel x:Name="Menu" Grid.Row="0" Background="#FF252526" Orientation="Horizontal" >
-                    <Button Content="Coordinates" Command="{Binding ShowCoordinatesCreateCommand, Mode=OneWay}" Width="110" Style="{StaticResource MenuButtonStyle}" />
-                        <Button Content="SAS Planet" Command="{Binding ShowSASPlanetCreateCommand, Mode=OneWay}" Width="110" Style="{StaticResource MenuButtonStyle}" />
+                    <Button Content="Coordinates" Command="{Binding ShowCoordinatesCreateCommand, Mode=OneWay}" Width="110" Style="{StaticResource MenuButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True" />
+                    <Button Content="SAS Planet" Command="{Binding ShowSASPlanetCreateCommand, Mode=OneWay}" Width="110" Style="{StaticResource MenuButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True" />
                 </StackPanel>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                     <core:ViewModelPresenter ViewModel="{Binding SelectedViewModel}" />

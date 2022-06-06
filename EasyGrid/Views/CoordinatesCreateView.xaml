@@ -19,18 +19,18 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="1"  Content="Create grid by boundary coordinates" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource PageLabelStyle}" Margin="0,10,0,0" />
+        <Label Grid.Row="0" Grid.Column="1"  Content="Create grid by boundary coordinates" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource PageLabelStyle}" Margin="0,0,0,0" Foreground="#FFCDCBCB" />
 
         <Image Grid.Row="2" Grid.Column="1" Margin="5,27,0,0" Width="30" Stretch="Uniform" Source="/Assets/grid1.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Label Grid.Row="2" Grid.Column="1" Content="Top left point" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource SmallArticleLabelStyle}" />

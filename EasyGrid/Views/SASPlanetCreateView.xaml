@@ -7,7 +7,7 @@
       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:viewModels="clr-namespace:EasyGrid.ViewModels"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="400">
+      d:DesignHeight="400" d:DesignWidth="500">
     <UserControl.DataContext>
         <viewModels:SASPlanetCreateViewModel />
     </UserControl.DataContext>
@@ -17,6 +17,46 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid>
-        <Label>SASPlanet</Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="1"  Content="Copy coordinates from last selection SASPlanet" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource PageLabelStyle}" Margin="0,0,0,0" Foreground="#FFCDCBCB" />
+
+        <Label Grid.Row="2" Grid.Column="1" Content="Path to 'LastSelection.hlg' file" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource SmallArticleLabelStyle}" Padding="0,5,5,5" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Abc}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="275" Height="30" Margin="0,27,0,0" Style="{StaticResource TextBoxStyle}" />
+        <Button Grid.Row="2" Grid.Column="1" Content="Browse" Command="{Binding OpenDialogCommand, Mode=OneWay}" HorizontalAlignment="Right" Width="64" Height="30" VerticalAlignment="Bottom" Style="{StaticResource CreateButtonStyle}"/>
+
+        <Grid Grid.Column="1" Grid.Row="4" Background="#FF404040">
+            <Label Content="File status: ready to copy" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource SmallArticleLabelStyle}" Padding="10,10,5,5" />
+
+            <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="61,42,0,0" Style="{StaticResource TextBoxStyle}" Width="120" Height="24" BorderThickness="1,1,1,1" Padding="1" Text="2" BorderBrush="#FF636363" IsReadOnly="True" />
+            <TextBox Text="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,42,0,0" Style="{StaticResource TextBoxStyle}" Width="120" Height="24" BorderThickness="1,1,1,1" Padding="1" BorderBrush="#FF636363" IsReadOnly="True" />
+            <Image Margin="33,42,0,0" Width="25" Stretch="Uniform" Source="/Assets/grid1.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+            <TextBox  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="61,77,0,0" Style="{StaticResource TextBoxStyle}" Width="120" Height="24" BorderThickness="1,1,1,1" Padding="1" Text="2" BorderBrush="#FF636363" IsReadOnly="True" />
+            <TextBox Text="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="184,77,0,0" Style="{StaticResource TextBoxStyle}" Width="120" Height="24" BorderThickness="1,1,1,1" Padding="1" BorderBrush="#FF636363" IsReadOnly="True" />
+            <Image Margin="33,77,0,0" Width="25" Stretch="Uniform" Source="/Assets/grid9.png" StretchDirection="Both" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+            <Label Content="Last modified file time" Margin="34,113,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource SmallArticleLabelStyle}" Padding="0,5,5,5" FontSize="12" />
+            <TextBox Text="06.06.2022 20:20:21" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="160,114,0,0" Style="{StaticResource TextBoxStyle}" TextAlignment="Center" Width="144" Height="24" BorderThickness="1,1,1,1" Padding="1" BorderBrush="#FF636363" IsReadOnly="True" />
+        </Grid>
+
+
+
+        <Button Grid.Row="6" Grid.Column="1" Content="Copy coordinate" Command="{Binding CopyCommand, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource CreateButtonStyle}"/>
+
+
     </Grid>
 </UserControl>
